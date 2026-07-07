@@ -41,7 +41,7 @@ async function loginUser(req,res){
         if(isCorrect){
             console.log(`User logged in successfully`);
             req.session.user={ id: user.id, name: user.name, email: user.email, role: user.role, family_id: user.family_id };
-            res.redirect('/dashboard');
+            req.session.save(()=>res.redirect('/dashboard'));
         }
         else{
             throw new Error("Invalid credentials");
@@ -54,9 +54,10 @@ async function loginUser(req,res){
 }
 async function logout(req,res){
     try{
-        req.session.destroy();
-        console.log(`User logged out successfully`);
-        res.redirect('/');
+        req.session.destroy(()=>{
+            console.log(`User logged out successfully`);
+            res.redirect('/');
+        });
     }
     catch(e){
         console.log(`Error in user logout : ${e.message}`);

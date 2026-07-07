@@ -20,7 +20,7 @@ async function createFamily(req,res){
         const inviteCode=crypto.randomBytes(4).toString('hex');
         const result=await Family.createFamily(name,inviteCode,req.session.user.id);
         req.session.user.family_id=result.insertId;
-        res.redirect('/family');
+        req.session.save(()=>res.redirect('/family'));
     }
     catch(e){
         console.log(`Error in creating family:${e.message}`);
@@ -45,7 +45,7 @@ async function joinFamily(req,res){
         const family=await Family.findByInviteCode(inviteCode);
         await Family.joinFamily(req.session.user.id,family.id);
         req.session.user.family_id=family.id;
-        res.redirect('/family');
+        req.session.save(()=>res.redirect('/family'));
     }
     catch(e){
         console.log(`Error in joining family:${e.message}`);
