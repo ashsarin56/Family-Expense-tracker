@@ -2,7 +2,7 @@ const User=require('../models/User');
 
 function getDashboard(req,res){
     try{
-        res.render('dashboard');
+        res.render('dashboard',{user:req.session.user});
     }
     catch(e){
         console.log(`Error:${e.message}`);

@@ -40,7 +40,7 @@ async function loginUser(req,res){
         const isCorrect=await bcrypt.compare(password,user.password);
         if(isCorrect){
             console.log(`User logged in successfully`);
-            req.session.user={ id: user.id, name: user.name, email: user.email, role: user.role };
+            req.session.user={ id: user.id, name: user.name, email: user.email, role: user.role, family_id: user.family_id };
             res.redirect('/dashboard');
         }
         else{

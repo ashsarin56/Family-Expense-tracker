@@ -6,7 +6,18 @@
     <title>dashboard</title>
 </head>
 <body>
-    <h1>welcome to dashboard</h1>
-    <a href="/auth/logout">logout</a>
+    <h1>welcome, <%=user.name%></h1>
+    <p>email: <%=user.email%> | role: <%=user.role%></p>
+    <hr>
+    <nav>
+        <a href="/family">my family</a> |
+        <a href="/family/create">create family</a> |
+        <a href="/family/join">join family</a> |
+        <a href="/categories">categories</a> |
+        <a href="/expenses/add">add expense</a> |
+        <a href="/expenses">view expenses</a> |
+        <a href="/insights">monthly insights</a> |
+        <a href="/auth/logout">logout</a>
+    </nav>
 </body>
 </html>
