@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>expenses</title>
+</head>
+<body>
+    <h1>family expenses</h1>
+    <a href="/expenses/add">+ add new expense</a>
+    <hr>
+    <%if(expenses.length==0){%>
+        <p>no expenses yet. add one!</p>
+    <%}else{%>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>date</th>
+            <th>description</th>
+            <th>category</th>
+            <th>amount (₹)</th>
+            <th>added by</th>
+            <th>actions</th>
+        </tr>
+        <%expenses.forEach(function(exp){%>
+        <tr>
+            <td><%=new Date(exp.created_at).toLocaleDateString()%></td>
+            <td><%=exp.description%></td>
+            <td><%=exp.category_name%></td>
+            <td><%=exp.amount%></td>
+            <td><%=exp.user_name%></td>
+            <td>
+                <a href="/expenses/edit/<%=exp.id%>">edit</a> |
+                <a href="/expenses/delete/<%=exp.id%>">delete</a>
+            </td>
+        </tr>
+        <%})%>
+    </table>
+    <%}%>
+    <br>
+    <a href="/dashboard">back to dashboard</a>
+</body>
+</html>

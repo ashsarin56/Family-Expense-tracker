@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>categories</title>
+</head>
+<body>
+    <h1>expense categories</h1>
+    <form action="/categories" method="post">
+        <label for="name">new category</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">add</button>
+    </form>
+    <hr>
+    <h2>existing categories</h2>
+    <%if(categories.length==0){%>
+        <p>no categories yet. add one above!</p>
+    <%}else{%>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>name</th>
+            <th>action</th>
+        </tr>
+        <%categories.forEach(function(cat){%>
+        <tr>
+            <td><%=cat.name%></td>
+            <td><a href="/categories/delete/<%=cat.id%>">delete</a></td>
+        </tr>
+        <%})%>
+    </table>
+    <%}%>
+    <br>
+    <a href="/dashboard">back to dashboard</a>
+</body>
+</html>

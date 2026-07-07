@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add expense</title>
+</head>
+<body>
+    <h1>add new expense</h1>
+    <%if(categories.length==0){%>
+        <p>no categories found. <a href="/categories">create categories first</a></p>
+    <%}else{%>
+    <form action="/expenses/add" method="post">
+        <label for="amount">amount (₹)</label>
+        <input type="number" id="amount" name="amount" step="0.01" required>
+        <br><br>
+        <label for="description">description</label>
+        <input type="text" id="description" name="description" required>
+        <br><br>
+        <label for="categoryId">category</label>
+        <select id="categoryId" name="categoryId" required>
+            <option value="">select category</option>
+            <%categories.forEach(function(cat){%>
+            <option value="<%=cat.id%>"><%=cat.name%></option>
+            <%})%>
+        </select>
+        <br><br>
+        <button type="submit">add expense</button>
+    </form>
+    <%}%>
+    <br>
+    <a href="/expenses">view all expenses</a> | <a href="/dashboard">back to dashboard</a>
+</body>
+</html>

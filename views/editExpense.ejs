@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit expense</title>
+</head>
+<body>
+    <h1>edit expense</h1>
+    <form action="/expenses/edit/<%=expense.id%>" method="post">
+        <label for="amount">amount (₹)</label>
+        <input type="number" id="amount" name="amount" step="0.01" value="<%=expense.amount%>" required>
+        <br><br>
+        <label for="description">description</label>
+        <input type="text" id="description" name="description" value="<%=expense.description%>" required>
+        <br><br>
+        <label for="categoryId">category</label>
+        <select id="categoryId" name="categoryId" required>
+            <%categories.forEach(function(cat){%>
+            <option value="<%=cat.id%>" <%if(cat.id==expense.category_id){%>selected<%}%>><%=cat.name%></option>
+            <%})%>
+        </select>
+        <br><br>
+        <button type="submit">update</button>
+    </form>
+    <br>
+    <a href="/expenses">cancel</a>
+</body>
+</html>
