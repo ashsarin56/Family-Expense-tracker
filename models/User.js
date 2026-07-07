@@ -20,6 +20,11 @@ const User={
         }
         console.log("User retrieved successfully");
         return results[0];
-    }
+    },
+    async getFamilyId(userId){
+    const [result]=await db.query('select family_id from users where id=?',[userId]);
+    if(result[0]==null)return -1;
+    return result[0];
+}
 }
 module.exports=User;

@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node app.js",
-    "dev":"nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@google/genai": "^2.10.0",
     "bcryptjs": "^3.0.3",
     "colors": "^1.4.0",
     "dotenv": "^17.4.2",

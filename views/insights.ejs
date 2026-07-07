@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>monthly insights</title>
+</head>
+<body>
+    <h1>monthly insights - <%=month%>/<%=year%></h1>
+    <p>total spent: <strong>₹<%=totalSpent%></strong></p>
+    <hr>
+    <h2>category-wise breakdown</h2>
+    <%if(summary.length==0){%>
+        <p>no expenses this month.</p>
+    <%}else{%>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>category</th>
+            <th>total (₹)</th>
+            <th>transactions</th>
+        </tr>
+        <%summary.forEach(function(s){%>
+        <tr>
+            <td><%=s.category_name%></td>
+            <td><%=s.total%></td>
+            <td><%=s.count%></td>
+        </tr>
+        <%})%>
+    </table>
+    <%}%>
+    <hr>
+    <h2>member-wise spending</h2>
+    <%if(userWise.length==0){%>
+        <p>no data.</p>
+    <%}else{%>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>member</th>
+            <th>total (₹)</th>
+            <th>transactions</th>
+        </tr>
+        <%userWise.forEach(function(u){%>
+        <tr>
+            <td><%=u.user_name%></td>
+            <td><%=u.total%></td>
+            <td><%=u.count%></td>
+        </tr>
+        <%})%>
+    </table>
+    <%}%>
+    <hr>
+    <h2>AI financial advice</h2>
+    <%if(aiInsight){%>
+        <div style="background:#f0f0f0;padding:15px;border-radius:8px;">
+            <p><%- aiInsight.replace(/\n/g,'<br>') %></p>
+        </div>
+    <%}else{%>
+        <a href="/insights/ai?month=<%=month%>&year=<%=year%>">get AI advice for this month</a>
+    <%}%>
+    <br><br>
+    <a href="/dashboard">back to dashboard</a>
+</body>
+</html>

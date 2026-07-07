@@ -1,11 +1,14 @@
 const express=require('express');
 const dotenv=require('dotenv');
 const colors=require('colors');
-const mysql=require('mysql2');
 const path=require('path');
 const session=require('express-session');
 const authRoutes=require('./routes/authRoutes');
 const dashboardRoutes=require('./routes/dashboardRoutes');
+const familyRoutes=require('./routes/FamilyRoutes');
+const categoryRoutes=require('./routes/categoryRoutes');
+const expenseRoutes=require('./routes/expenseRoutes');
+const insightsRoutes=require('./routes/insightsRoutes');
 
 const app=express();
 dotenv.config();
@@ -26,6 +29,10 @@ app.use(session({
 }));
 app.use('/auth',authRoutes);
 app.use('/dashboard',dashboardRoutes);
+app.use('/family',familyRoutes);
+app.use('/categories',categoryRoutes);
+app.use('/expenses',expenseRoutes);
+app.use('/insights',insightsRoutes);
 
 app.get('/',(req,res)=>{
     res.render('landing');
