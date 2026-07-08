@@ -4,6 +4,30 @@ const dotenv=require('dotenv');
 dotenv.config();
 
 const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
+const models=["gemini-3.1-flash-lite","gemini-2.5-flash-lite","gemini-3.5-flash","gemini-3-flash","gemini-2.5-flash"];
+let currentModelIndex=0;
+
+async function getNewModel(prompt){
+    for(let i=0;i<models.length;i++){
+        const modelIndex=(currentModelIndex+i)%models.length;
+        const modelName=models[modelIndex];
+        try{
+            console.log(`trying model: ${modelName}`);
+            const response=await ai.models.generateContent({model:modelName,contents:prompt});
+            currentModelIndex=modelIndex;
+            return response.text;
+        }
+        catch(e){
+            const errorMsg=e.message.toLowerCase();
+            if(errorMsg.includes('quota')&&errorMsg.includes('exceeded')){
+                console.log(`model ${modelName} quota exceeded, switching to next model...`);
+                continue;
+            }
+            throw e;
+        }
+    }
+    throw new Error("all AI models exhausted try again later.");
+}
 
 async function getInsightsPage(req,res){
     try{
@@ -43,8 +67,7 @@ async function getAIInsight(req,res){
             ${userWise.map(u=>`- ${u.user_name}: ₹${u.total} (${u.count} transactions)`).join('\n')}
             Total spent this month: ₹${totalSpent}
             Give short, actionable tips. Mention specific categories if spending seems high. Keep it under 150 words.`;
-            const response=await ai.models.generateContent({model:'gemini-2.0-flash',contents:prompt});
-            aiInsight=response.text;
+            aiInsight=await getNewModel(prompt);
         }
         res.render('insights',{summary,userWise,expenses,totalSpent,month,year,user:req.session.user,aiInsight});
     }
