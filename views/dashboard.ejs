@@ -3,21 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboard</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>welcome, <%=user.name%></h1>
-    <p>email: <%=user.email%> | role: <%=user.role%></p>
-    <hr>
-    <nav>
-        <a href="/family">my family</a> |
-        <a href="/family/create">create family</a> |
-        <a href="/family/join">join family</a> |
-        <a href="/categories">categories</a> |
-        <a href="/expenses/add">add expense</a> |
-        <a href="/expenses">view expenses</a> |
-        <a href="/insights">monthly insights</a> |
-        <a href="/auth/logout">logout</a>
-    </nav>
+    <div class="navbar">
+        <a href="/dashboard" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/dashboard" class="active">Dashboard</a>
+            <a href="/family">Family</a>
+            <a href="/categories">Categories</a>
+            <a href="/expenses">Expenses</a>
+            <a href="/insights">Insights</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h1>Welcome, <%=user.name%> 👋</h1>
+            <p>Email: <%=user.email%> &nbsp;|&nbsp; Role: <span class="badge badge-primary"><%=user.role%></span></p>
+        </div>
+        <div class="stats-grid">
+            <a href="/expenses/add" class="stat-card" style="text-decoration:none;color:inherit;">
+                <div class="stat-value">➕</div>
+                <div class="stat-label">Add Expense</div>
+            </a>
+            <a href="/expenses" class="stat-card" style="text-decoration:none;color:inherit;">
+                <div class="stat-value">📋</div>
+                <div class="stat-label">View Expenses</div>
+            </a>
+            <a href="/family" class="stat-card" style="text-decoration:none;color:inherit;">
+                <div class="stat-value">👨‍👩‍👧‍👦</div>
+                <div class="stat-label">My Family</div>
+            </a>
+            <a href="/insights" class="stat-card" style="text-decoration:none;color:inherit;">
+                <div class="stat-value">📊</div>
+                <div class="stat-label">Monthly Insights</div>
+            </a>
+        </div>
+    </div>
 </body>
 </html>

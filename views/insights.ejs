@@ -3,61 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>monthly insights</title>
+    <title>Monthly Insights</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>monthly insights - <%=month%>/<%=year%></h1>
-    <p>total spent: <strong>₹<%=totalSpent%></strong></p>
-    <hr>
-    <h2>category-wise breakdown</h2>
-    <%if(summary.length==0){%>
-        <p>no expenses this month.</p>
-    <%}else{%>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>category</th>
-            <th>total (₹)</th>
-            <th>transactions</th>
-        </tr>
-        <%summary.forEach(function(s){%>
-        <tr>
-            <td><%=s.category_name%></td>
-            <td><%=s.total%></td>
-            <td><%=s.count%></td>
-        </tr>
-        <%})%>
-    </table>
-    <%}%>
-    <hr>
-    <h2>member-wise spending</h2>
-    <%if(userWise.length==0){%>
-        <p>no data.</p>
-    <%}else{%>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>member</th>
-            <th>total (₹)</th>
-            <th>transactions</th>
-        </tr>
-        <%userWise.forEach(function(u){%>
-        <tr>
-            <td><%=u.user_name%></td>
-            <td><%=u.total%></td>
-            <td><%=u.count%></td>
-        </tr>
-        <%})%>
-    </table>
-    <%}%>
-    <hr>
-    <h2>AI financial advice</h2>
-    <%if(aiInsight){%>
-        <div style="background:#f0f0f0;padding:15px;border-radius:8px;">
-            <p><%- aiInsight.replace(/\n/g,'<br>') %></p>
+    <div class="navbar">
+        <a href="/dashboard" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/family">Family</a>
+            <a href="/categories">Categories</a>
+            <a href="/expenses">Expenses</a>
+            <a href="/insights" class="active">Insights</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h1>Monthly Insights — <%=month%>/<%=year%></h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">₹<%=totalSpent%></div>
+                    <div class="stat-label">Total Spent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><%=summary.length%></div>
+                    <div class="stat-label">Categories Used</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><%=expenses.length%></div>
+                    <div class="stat-label">Transactions</div>
+                </div>
+            </div>
         </div>
-    <%}else{%>
-        <a href="/insights/ai?month=<%=month%>&year=<%=year%>">get AI advice for this month</a>
-    <%}%>
-    <br><br>
-    <a href="/dashboard">back to dashboard</a>
+        <%if(summary.length>0){%>
+        <div class="card">
+            <h2>Category-wise Breakdown</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Total (₹)</th>
+                        <th>Transactions</th>
+                    </tr>
+                    <%summary.forEach(function(s){%>
+                    <tr>
+                        <td><%=s.category_name%></td>
+                        <td><strong>₹<%=s.total%></strong></td>
+                        <td><%=s.count%></td>
+                    </tr>
+                    <%})%>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Member-wise Spending</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Member</th>
+                        <th>Total (₹)</th>
+                        <th>Transactions</th>
+                    </tr>
+                    <%userWise.forEach(function(u){%>
+                    <tr>
+                        <td><%=u.user_name%></td>
+                        <td><strong>₹<%=u.total%></strong></td>
+                        <td><%=u.count%></td>
+                    </tr>
+                    <%})%>
+                </table>
+            </div>
+        </div>
+        <%}%>
+        <div class="card">
+            <h2>🤖 AI Financial Advice</h2>
+            <%if(aiInsight){%>
+                <div class="ai-box">
+                    <p><%- aiInsight.replace(/\n/g,'<br>') %></p>
+                </div>
+            <%}else{%>
+                <p>Get personalized tips based on your spending patterns.</p>
+                <a href="/insights/ai?month=<%=month%>&year=<%=year%>" class="btn btn-primary mt-20">Generate AI Advice →</a>
+            <%}%>
+        </div>
+        <a href="/dashboard" class="link">← Back to Dashboard</a>
+    </div>
 </body>
 </html>

@@ -3,34 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>categories</title>
+    <title>Categories</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>expense categories</h1>
-    <form action="/categories" method="post">
-        <label for="name">new category</label>
-        <input type="text" id="name" name="name" required>
-        <button type="submit">add</button>
-    </form>
-    <hr>
-    <h2>existing categories</h2>
-    <%if(categories.length==0){%>
-        <p>no categories yet. add one above!</p>
-    <%}else{%>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>name</th>
-            <th>action</th>
-        </tr>
-        <%categories.forEach(function(cat){%>
-        <tr>
-            <td><%=cat.name%></td>
-            <td><a href="/categories/delete/<%=cat.id%>">delete</a></td>
-        </tr>
-        <%})%>
-    </table>
-    <%}%>
-    <br>
-    <a href="/dashboard">back to dashboard</a>
+    <div class="navbar">
+        <a href="/dashboard" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/family">Family</a>
+            <a href="/categories" class="active">Categories</a>
+            <a href="/expenses">Expenses</a>
+            <a href="/insights">Insights</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h1>Expense Categories</h1>
+            <form action="/categories" method="post" style="display:flex;gap:10px;align-items:flex-end;">
+                <div class="form-group" style="flex:1;margin-bottom:0;">
+                    <label for="name">New Category</label>
+                    <input type="text" id="name" name="name" placeholder="e.g. Food, Rent, Travel" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Existing Categories</h2>
+            <%if(categories.length==0){%>
+                <p>No categories yet. Add one above!</p>
+            <%}else{%>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    <%categories.forEach(function(cat){%>
+                    <tr>
+                        <td><%=cat.name%></td>
+                        <td><a href="/categories/delete/<%=cat.id%>" class="btn btn-danger" style="padding:5px 15px;font-size:0.85em;">Delete</a></td>
+                    </tr>
+                    <%})%>
+                </table>
+            </div>
+            <%}%>
+        </div>
+        <a href="/dashboard" class="link">← Back to Dashboard</a>
+    </div>
 </body>
 </html>

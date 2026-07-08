@@ -4,15 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Login</h1>
-    <form action="/auth/login" method="post">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Login</button>
-    </form>
+    <div class="navbar">
+        <a href="/" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/auth/login" class="active">Login</a>
+            <a href="/auth/register">Register</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card" style="max-width:450px;margin:0 auto;">
+            <h1 class="text-center">Welcome Back</h1>
+            <form action="/auth/login" method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Login</button>
+            </form>
+            <p class="text-center mt-20">Don't have an account? <a href="/auth/register" class="link">Register</a></p>
+        </div>
+    </div>
 </body>
 </html>

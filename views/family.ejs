@@ -3,28 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my family</title>
+    <title>My Family</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1><%=family.name%></h1>
-    <p>invite code: <strong><%=family.invite_code%></strong> (share this with family members)</p>
-    <hr>
-    <h2>members</h2>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>name</th>
-            <th>email</th>
-            <th>role</th>
-        </tr>
-        <%members.forEach(function(member){%>
-        <tr>
-            <td><%=member.name%></td>
-            <td><%=member.email%></td>
-            <td><%=member.role%></td>
-        </tr>
-        <%})%>
-    </table>
-    <br>
-    <a href="/dashboard">back to dashboard</a>
+    <div class="navbar">
+        <a href="/dashboard" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/family" class="active">Family</a>
+            <a href="/categories">Categories</a>
+            <a href="/expenses">Expenses</a>
+            <a href="/insights">Insights</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h1><%=family.name%></h1>
+            <p>Invite Code: <span class="badge badge-primary"><%=family.invite_code%></span> — share this with family members to join</p>
+        </div>
+        <div class="card">
+            <h2>Members</h2>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                    <%members.forEach(function(member){%>
+                    <tr>
+                        <td><%=member.name%></td>
+                        <td><%=member.email%></td>
+                        <td><span class="badge badge-primary"><%=member.role%></span></td>
+                    </tr>
+                    <%})%>
+                </table>
+            </div>
+        </div>
+        <a href="/dashboard" class="link">← Back to Dashboard</a>
+    </div>
 </body>
 </html>

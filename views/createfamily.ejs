@@ -3,16 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>create family</title>
+    <title>Create Family</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>create a family</h1>
-    <form action="/family/create" method="post">
-        <label for="name">family name</label>
-        <input type="text" id="name" name="name" required>
-        <button type="submit">create</button>
-    </form>
-    <br>
-    <a href="/dashboard">back to dashboard</a>
+    <div class="navbar">
+        <a href="/dashboard" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/family" class="active">Family</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card" style="max-width:450px;margin:0 auto;">
+            <h1 class="text-center">Create a Family</h1>
+            <p class="text-center">Start a family group and invite your members to track expenses together.</p>
+            <form action="/family/create" method="post">
+                <div class="form-group">
+                    <label for="name">Family Name</label>
+                    <input type="text" id="name" name="name" placeholder="e.g. The Shukla Family" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Create Family</button>
+            </form>
+            <p class="text-center mt-20">Have an invite code? <a href="/family/join" class="link">Join a Family</a></p>
+        </div>
+    </div>
 </body>
 </html>

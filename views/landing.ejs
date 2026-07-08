@@ -3,11 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home-family-expense tracker</title>
+    <title>Family Expense Tracker</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Family-expense-tracker</h1>
-    <a href="/auth/login">Login</a>
-    <a href="/auth/register">Register</a>
+    <div class="navbar">
+        <a href="/" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card text-center">
+            <h1>Family Expense Tracker</h1>
+            <p>Track, manage, and understand your family's expenses together. Get AI-powered insights to save smarter.</p>
+            <div class="mt-20">
+                <a href="/auth/register" class="btn btn-primary">Get Started →</a>
+                <a href="/auth/login" class="btn btn-outline" style="margin-left:10px;">Login</a>
+            </div>
+            <div class="stats-grid mt-20">
+                <div class="stat-card">
+                    <div class="stat-value">📊</div>
+                    <div class="stat-label">Track Expenses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">👨‍👩‍👧‍👦</div>
+                    <div class="stat-label">Family Sharing</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">🤖</div>
+                    <div class="stat-label">AI Insights</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

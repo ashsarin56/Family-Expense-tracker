@@ -3,16 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>join family</title>
+    <title>Join Family</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>join a family</h1>
-    <form action="/family/join" method="post">
-        <label for="inviteCode">invite code</label>
-        <input type="text" id="inviteCode" name="inviteCode" required>
-        <button type="submit">join</button>
-    </form>
-    <br>
-    <a href="/dashboard">back to dashboard</a>
+    <div class="navbar">
+        <a href="/dashboard" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/family" class="active">Family</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card" style="max-width:450px;margin:0 auto;">
+            <h1 class="text-center">Join a Family</h1>
+            <p class="text-center">Enter the invite code shared by your family admin.</p>
+            <form action="/family/join" method="post">
+                <div class="form-group">
+                    <label for="inviteCode">Invite Code</label>
+                    <input type="text" id="inviteCode" name="inviteCode" placeholder="Enter invite code" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Join Family</button>
+            </form>
+            <p class="text-center mt-20">Want to create your own? <a href="/family/create" class="link">Create a Family</a></p>
+        </div>
+    </div>
 </body>
 </html>

@@ -3,40 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>expenses</title>
+    <title>Expenses</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>family expenses</h1>
-    <a href="/expenses/add">+ add new expense</a>
-    <hr>
-    <%if(expenses.length==0){%>
-        <p>no expenses yet. add one!</p>
-    <%}else{%>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>date</th>
-            <th>description</th>
-            <th>category</th>
-            <th>amount (₹)</th>
-            <th>added by</th>
-            <th>actions</th>
-        </tr>
-        <%expenses.forEach(function(exp){%>
-        <tr>
-            <td><%=new Date(exp.created_at).toLocaleDateString()%></td>
-            <td><%=exp.description%></td>
-            <td><%=exp.category_name%></td>
-            <td><%=exp.amount%></td>
-            <td><%=exp.user_name%></td>
-            <td>
-                <a href="/expenses/edit/<%=exp.id%>">edit</a> |
-                <a href="/expenses/delete/<%=exp.id%>">delete</a>
-            </td>
-        </tr>
-        <%})%>
-    </table>
-    <%}%>
-    <br>
-    <a href="/dashboard">back to dashboard</a>
+    <div class="navbar">
+        <a href="/dashboard" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/family">Family</a>
+            <a href="/categories">Categories</a>
+            <a href="/expenses" class="active">Expenses</a>
+            <a href="/insights">Insights</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <h1>Family Expenses</h1>
+                <a href="/expenses/add" class="btn btn-primary">+ Add Expense</a>
+            </div>
+        </div>
+        <div class="card">
+            <%if(expenses.length==0){%>
+                <p>No expenses yet. <a href="/expenses/add" class="link">Add your first expense!</a></p>
+            <%}else{%>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Amount (₹)</th>
+                        <th>Added By</th>
+                        <th>Actions</th>
+                    </tr>
+                    <%expenses.forEach(function(exp){%>
+                    <tr>
+                        <td><%=new Date(exp.created_at).toLocaleDateString()%></td>
+                        <td><%=exp.description%></td>
+                        <td><span class="badge badge-primary"><%=exp.category_name%></span></td>
+                        <td><strong>₹<%=exp.amount%></strong></td>
+                        <td><%=exp.user_name%></td>
+                        <td>
+                            <a href="/expenses/edit/<%=exp.id%>" class="btn btn-outline" style="padding:5px 12px;font-size:0.85em;">Edit</a>
+                            <a href="/expenses/delete/<%=exp.id%>" class="btn btn-danger" style="padding:5px 12px;font-size:0.85em;">Delete</a>
+                        </td>
+                    </tr>
+                    <%})%>
+                </table>
+            </div>
+            <%}%>
+        </div>
+        <a href="/dashboard" class="link">← Back to Dashboard</a>
+    </div>
 </body>
 </html>

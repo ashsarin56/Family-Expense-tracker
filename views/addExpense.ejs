@@ -3,32 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>add expense</title>
+    <title>Add Expense</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>add new expense</h1>
-    <%if(categories.length==0){%>
-        <p>no categories found. <a href="/categories">create categories first</a></p>
-    <%}else{%>
-    <form action="/expenses/add" method="post">
-        <label for="amount">amount (₹)</label>
-        <input type="number" id="amount" name="amount" step="0.01" required>
-        <br><br>
-        <label for="description">description</label>
-        <input type="text" id="description" name="description" required>
-        <br><br>
-        <label for="categoryId">category</label>
-        <select id="categoryId" name="categoryId" required>
-            <option value="">select category</option>
-            <%categories.forEach(function(cat){%>
-            <option value="<%=cat.id%>"><%=cat.name%></option>
-            <%})%>
-        </select>
-        <br><br>
-        <button type="submit">add expense</button>
-    </form>
-    <%}%>
-    <br>
-    <a href="/expenses">view all expenses</a> | <a href="/dashboard">back to dashboard</a>
+    <div class="navbar">
+        <a href="/dashboard" class="brand">💰 FamExpense</a>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/family">Family</a>
+            <a href="/categories">Categories</a>
+            <a href="/expenses" class="active">Expenses</a>
+            <a href="/insights">Insights</a>
+            <a href="/auth/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="card" style="max-width:500px;margin:0 auto;">
+            <h1 class="text-center">Add New Expense</h1>
+            <%if(categories.length==0){%>
+                <div class="alert alert-info">No categories found. <a href="/categories" class="link">Create categories first</a></div>
+            <%}else{%>
+            <form action="/expenses/add" method="post">
+                <div class="form-group">
+                    <label for="amount">Amount (₹)</label>
+                    <input type="number" id="amount" name="amount" step="0.01" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" name="description" placeholder="What was this expense for?" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoryId">Category</label>
+                    <select id="categoryId" name="categoryId" required>
+                        <option value="">Select category</option>
+                        <%categories.forEach(function(cat){%>
+                        <option value="<%=cat.id%>"><%=cat.name%></option>
+                        <%})%>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Add Expense</button>
+            </form>
+            <%}%>
+            <p class="text-center mt-20"><a href="/expenses" class="link">← View All Expenses</a></p>
+        </div>
+    </div>
 </body>
 </html>
