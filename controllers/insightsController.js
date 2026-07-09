@@ -7,6 +7,9 @@ const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
 const models=["gemini-3.1-flash-lite","gemini-2.5-flash-lite","gemini-3.5-flash","gemini-3-flash","gemini-2.5-flash"];
 let currentModelIndex=0;
 
+// cache: key = "familyId-month-year", value = {insight, expenseCount}
+const insightCache={};
+
 async function getNewModel(prompt){
     for(let i=0;i<models.length;i++){
         const modelIndex=(currentModelIndex+i)%models.length;
@@ -60,14 +63,26 @@ async function getAIInsight(req,res){
         const totalSpent=summary.reduce((acc,item)=>acc+parseFloat(item.total),0);
         let aiInsight="No data available for AI analysis.";
         if(summary.length>0){
-            const prompt=`You are a family finance advisor. Analyze this family's monthly expense data and give practical, friendly advice in 4-5 bullet points.
+            const cacheKey=`${familyId}-${month}-${year}`;
+            const cached=insightCache[cacheKey];
+            // serve cache if expense count hasn't changed
+            if(cached&&cached.expenseCount===expenses.length){
+                console.log(`serving cached insight for ${cacheKey}`);
+                aiInsight=cached.insight;
+            }
+            else{
+                const prompt=`You are a family finance advisor. Analyze this family's monthly expense data and give practical, friendly advice in 4-5 bullet points.
             Monthly Summary (Category wise):
             ${summary.map(s=>`- ${s.category_name}: ₹${s.total} (${s.count} transactions)`).join('\n')}
             Member wise spending:
             ${userWise.map(u=>`- ${u.user_name}: ₹${u.total} (${u.count} transactions)`).join('\n')}
             Total spent this month: ₹${totalSpent}
             Give short, actionable tips. Mention specific categories if spending seems high. Keep it under 150 words.`;
-            aiInsight=await getNewModel(prompt);
+                aiInsight=await getNewModel(prompt);
+                // store in cache with current expense count
+                insightCache[cacheKey]={insight:aiInsight,expenseCount:expenses.length};
+                console.log(`cached insight for ${cacheKey}`);
+            }
         }
         res.render('insights',{summary,userWise,expenses,totalSpent,month,year,user:req.session.user,aiInsight});
     }

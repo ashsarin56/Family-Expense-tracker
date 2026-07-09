@@ -17,6 +17,9 @@
     <div class="container">
         <div class="card" style="max-width:450px;margin:0 auto;">
             <h1 class="text-center">Create Account</h1>
+            <%if(error){%>
+                <div class="alert alert-error"><%=error%></div>
+            <%}%>
             <form action="/auth/register" method="post">
                 <div class="form-group">
                     <label for="name">Name</label>

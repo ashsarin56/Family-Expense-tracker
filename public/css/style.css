@@ -141,6 +141,7 @@ tr:hover{background:#FFFDF5;}
     font-size:0.9em;
 }
 .alert-info{background:#FFF8EE;border:1px solid #F5A623;color:#8B6914;}
+.alert-error{background:#FFF0F0;border:1px solid #D94040;color:#D94040;}
 
 /* ========== STATS GRID ========== */
 .stats-grid{
