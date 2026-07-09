@@ -1,5 +1,5 @@
-create database if not exists family_expense_tracker;
-use family_expense_tracker;
+-- Use the database that's already created by Railway
+-- The database name comes from the MYSQLDATABASE environment variable (default: railway)
 
 create table if not exists users(
     id int primary key auto_increment,

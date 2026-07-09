@@ -11,6 +11,7 @@ function initializeDatabase(retryCount = 0) {
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,  // Use the correct database
         multipleStatements: true,
         waitForConnections: true,
         connectionTimeout: 10000
