@@ -20,7 +20,21 @@ create table if not exists families(
     foreign key (created_by) references users(id)
 );
 
-alter table users add constraint fk_user_family foreign key (family_id) references families(id);
+-- Add foreign key constraint if it doesn't exist
+SET @constraint_exists = (
+    SELECT COUNT(*) FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
+    WHERE CONSTRAINT_NAME = 'fk_user_family' 
+    AND TABLE_NAME = 'users'
+);
+
+SET @sql = IF(@constraint_exists = 0, 
+    'ALTER TABLE users ADD CONSTRAINT fk_user_family FOREIGN KEY (family_id) REFERENCES families(id)',
+    'SELECT 1'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 create table if not exists categories(
     id int primary key auto_increment,
@@ -43,3 +57,4 @@ create table if not exists expenses(
     foreign key (user_id) references users(id),
     foreign key (family_id) references families(id)
 );
+
