@@ -76,15 +76,110 @@
             </div>
         </div>
         <%}%>
-        <div class="card">
-            <h2>🤖 AI Financial Advice</h2>
-            <%if(aiInsight){%>
-                <div class="ai-box">
-                    <p><%- aiInsight.replace(/\n/g,'<br>') %></p>
+        <div class="card ai-card">
+            <div class="ai-header">
+                <div class="ai-header-icon">🤖</div>
+                <div>
+                    <h2>AI Financial Advice</h2>
+                    <p class="ai-subtitle">Powered by Gemini · Personalized for your family</p>
                 </div>
+            </div>
+            <%if(aiInsight){%>
+                <div class="ai-insights-container" id="ai-insights-container"></div>
+                <div class="ai-actions">
+                    <a href="/insights/ai?month=<%=month%>&year=<%=year%>" class="btn btn-outline btn-sm">
+                        🔄 Regenerate Advice
+                    </a>
+                </div>
+                <script>
+                (function(){
+                    var raw = `<%- JSON.stringify(aiInsight) %>`;
+                    var lines = raw.split('\n').map(function(l){ return l.trim(); }).filter(function(l){ return l.length > 0; });
+                    var container = document.getElementById('ai-insights-container');
+                    var bulletRegex = /^[-*•]\s+/;
+                    var numberRegex = /^\d+[\.\)]\s+/;
+
+                    function detectIcon(text) {
+                        var t = text.toLowerCase();
+                        if (t.includes('save') || t.includes('saving')) return '💡';
+                        if (t.includes('budget') || t.includes('plan')) return '📋';
+                        if (t.includes('spend') || t.includes('expense') || t.includes('cost')) return '💸';
+                        if (t.includes('food') || t.includes('grocer') || t.includes('dining') || t.includes('eat')) return '🍽️';
+                        if (t.includes('transport') || t.includes('fuel') || t.includes('travel') || t.includes('commute')) return '🚗';
+                        if (t.includes('entertain') || t.includes('subscri') || t.includes('movie') || t.includes('fun')) return '🎬';
+                        if (t.includes('health') || t.includes('medical') || t.includes('doctor')) return '🏥';
+                        if (t.includes('education') || t.includes('school') || t.includes('tuition') || t.includes('learn')) return '📚';
+                        if (t.includes('invest') || t.includes('return') || t.includes('grow')) return '📈';
+                        if (t.includes('utility') || t.includes('electric') || t.includes('bill') || t.includes('rent')) return '🏠';
+                        if (t.includes('shop') || t.includes('cloth') || t.includes('fashion')) return '🛍️';
+                        if (t.includes('great') || t.includes('good') || t.includes('well done') || t.includes('excellent')) return '✅';
+                        if (t.includes('warn') || t.includes('careful') || t.includes('watch out') || t.includes('alert') || t.includes('high')) return '⚠️';
+                        if (t.includes('tip') || t.includes('suggest') || t.includes('recommend') || t.includes('consider')) return '🎯';
+                        if (t.includes('track') || t.includes('monitor') || t.includes('review')) return '📊';
+                        return '💡';
+                    }
+
+                    function detectCategory(text) {
+                        var t = text.toLowerCase();
+                        if (t.includes('great') || t.includes('good') || t.includes('well done') || t.includes('excellent') || t.includes('keep up')) return 'positive';
+                        if (t.includes('warn') || t.includes('careful') || t.includes('watch out') || t.includes('alert') || t.includes('high') || t.includes('exceed') || t.includes('over')) return 'warning';
+                        if (t.includes('save') || t.includes('saving') || t.includes('cut') || t.includes('reduce') || t.includes('lower')) return 'saving';
+                        return 'tip';
+                    }
+
+                    var bullets = [];
+                    var headers = [];
+
+                    lines.forEach(function(line) {
+                        if (bulletRegex.test(line) || numberRegex.test(line)) {
+                            var cleaned = line.replace(bulletRegex, '').replace(numberRegex, '');
+                            cleaned = cleaned.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                            bullets.push(cleaned);
+                        } else {
+                            var cleaned = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                            cleaned = cleaned.replace(/^#+\s*/, '');
+                            headers.push(cleaned);
+                        }
+                    });
+
+                    if (headers.length > 0) {
+                        var summaryDiv = document.createElement('div');
+                        summaryDiv.className = 'ai-summary-text';
+                        summaryDiv.innerHTML = headers.join(' ');
+                        container.appendChild(summaryDiv);
+                    }
+                    if (bullets.length > 0) {
+                        var grid = document.createElement('div');
+                        grid.className = 'ai-tips-grid';
+                        bullets.forEach(function(tip, index) {
+                            var icon = detectIcon(tip);
+                            var category = detectCategory(tip);
+                            var card = document.createElement('div');
+                            card.className = 'ai-tip-card ai-tip-' + category;
+                            card.style.animationDelay = (index * 0.1) + 's';
+                            card.innerHTML =
+                                '<div class="ai-tip-icon">' + icon + '</div>' +
+                                '<div class="ai-tip-content">' +
+                                    '<span class="ai-tip-badge ai-badge-' + category + '">' +
+                                        category.charAt(0).toUpperCase() + category.slice(1) +
+                                    '</span>' +
+                                    '<p>' + tip + '</p>' +
+                                '</div>';
+                            grid.appendChild(card);
+                        });
+                        container.appendChild(grid);
+                    }
+                })();
+                </script>
             <%}else{%>
-                <p>Get personalized tips based on your spending patterns.</p>
-                <a href="/insights/ai?month=<%=month%>&year=<%=year%>" class="btn btn-primary mt-20">Generate AI Advice →</a>
+                <div class="ai-empty-state">
+                    <div class="ai-empty-icon">✨</div>
+                    <h3>Unlock Smart Insights</h3>
+                    <p>Get personalized, AI-powered tips based on your family's spending patterns this month.</p>
+                    <a href="/insights/ai?month=<%=month%>&year=<%=year%>" class="btn btn-primary mt-20">
+                        ⚡ Generate AI Advice
+                    </a>
+                </div>
             <%}%>
         </div>
         <a href="/dashboard" class="link">← Back to Dashboard</a>

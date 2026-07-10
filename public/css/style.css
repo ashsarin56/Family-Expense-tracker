@@ -162,13 +162,160 @@ tr:hover{background:#FFFDF5;}
 .stat-card .stat-value{font-size:1.8em;font-weight:700;color:#F5A623;}
 .stat-card .stat-label{font-size:0.85em;color:#666;margin-top:5px;}
 
-/* ========== AI BOX ========== */
-.ai-box{
-    background:#FFFDF5;
+/* ========== AI INSIGHTS SECTION ========== */
+.ai-card{
+    border-top:3px solid transparent;
+    border-image:linear-gradient(90deg,#F5A623,#FF6B6B,#8B5CF6) 1;
+    position:relative;
+    overflow:hidden;
+}
+.ai-card::before{
+    content:'';
+    position:absolute;
+    top:0;right:0;
+    width:200px;height:200px;
+    background:radial-gradient(circle,rgba(245,166,35,0.06) 0%,transparent 70%);
+    pointer-events:none;
+}
+.ai-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:24px;
+    padding-bottom:18px;
+    border-bottom:1px solid #E8E0D4;
+}
+.ai-header h2{margin-bottom:2px;}
+.ai-header-icon{
+    font-size:2.2em;
+    width:55px;height:55px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#FFF8EE,#FFF0D4);
+    border-radius:14px;
+    flex-shrink:0;
+}
+.ai-subtitle{
+    font-size:0.82em;
+    color:#999;
+    margin:0;
+    letter-spacing:0.3px;
+}
+
+/* Summary text from non-bullet lines */
+.ai-summary-text{
+    background:linear-gradient(135deg,#FFFDF5,#FFF8EE);
     border:1px solid #E8E0D4;
     border-radius:10px;
-    padding:20px;
+    padding:16px 20px;
+    margin-bottom:20px;
+    font-size:0.95em;
+    color:#555;
     line-height:1.7;
+}
+
+/* Tips grid */
+.ai-tips-grid{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+/* Individual tip card */
+.ai-tip-card{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:16px 18px;
+    border-radius:12px;
+    border:1px solid #E8E0D4;
+    background:#fff;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    animation:aiFadeSlideIn 0.4s ease both;
+}
+.ai-tip-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(0,0,0,0.06);
+}
+@keyframes aiFadeSlideIn{
+    from{opacity:0;transform:translateY(12px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* Category color accents */
+.ai-tip-positive{border-left:4px solid #22C55E;background:linear-gradient(135deg,#fff,#F0FFF4);}
+.ai-tip-warning{border-left:4px solid #F59E0B;background:linear-gradient(135deg,#fff,#FFFBEB);}
+.ai-tip-saving{border-left:4px solid #3B82F6;background:linear-gradient(135deg,#fff,#EFF6FF);}
+.ai-tip-tip{border-left:4px solid #8B5CF6;background:linear-gradient(135deg,#fff,#F5F3FF);}
+
+.ai-tip-icon{
+    font-size:1.5em;
+    flex-shrink:0;
+    width:40px;height:40px;
+    display:flex;align-items:center;justify-content:center;
+    background:#FFFDF5;
+    border-radius:10px;
+    border:1px solid #F0E8D8;
+}
+.ai-tip-content{flex:1;min-width:0;}
+.ai-tip-content p{
+    margin:6px 0 0;
+    font-size:0.93em;
+    color:#444;
+    line-height:1.65;
+}
+
+/* Category badges */
+.ai-tip-badge{
+    display:inline-block;
+    padding:2px 10px;
+    border-radius:20px;
+    font-size:0.72em;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+}
+.ai-badge-positive{background:#DCFCE7;color:#166534;}
+.ai-badge-warning{background:#FEF3C7;color:#92400E;}
+.ai-badge-saving{background:#DBEAFE;color:#1E40AF;}
+.ai-badge-tip{background:#EDE9FE;color:#5B21B6;}
+
+/* Actions bar */
+.ai-actions{
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px solid #E8E0D4;
+    display:flex;
+    justify-content:flex-end;
+}
+.btn-sm{
+    padding:7px 16px;
+    font-size:0.85em;
+}
+
+/* Empty state */
+.ai-empty-state{
+    text-align:center;
+    padding:30px 20px;
+}
+.ai-empty-icon{
+    font-size:3em;
+    margin-bottom:12px;
+    animation:aiPulse 2s ease-in-out infinite;
+}
+@keyframes aiPulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+}
+.ai-empty-state h3{
+    font-size:1.2em;
+    color:#333;
+    margin-bottom:8px;
+}
+.ai-empty-state p{
+    color:#888;
+    font-size:0.92em;
+    max-width:360px;
+    margin:0 auto;
 }
 
 /* ========== UTILITIES ========== */

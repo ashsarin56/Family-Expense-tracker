@@ -65,7 +65,6 @@ async function getAIInsight(req,res){
         if(summary.length>0){
             const cacheKey=`${familyId}-${month}-${year}`;
             const cached=insightCache[cacheKey];
-            // serve cache if expense count hasn't changed
             if(cached&&cached.expenseCount===expenses.length){
                 console.log(`serving cached insight for ${cacheKey}`);
                 aiInsight=cached.insight;
@@ -79,7 +78,6 @@ async function getAIInsight(req,res){
             Total spent this month: ₹${totalSpent}
             Give short, actionable tips. Mention specific categories if spending seems high. Keep it under 150 words.`;
                 aiInsight=await getNewModel(prompt);
-                // store in cache with current expense count
                 insightCache[cacheKey]={insight:aiInsight,expenseCount:expenses.length};
                 console.log(`cached insight for ${cacheKey}`);
             }
